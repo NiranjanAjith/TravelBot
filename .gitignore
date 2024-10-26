@@ -1,0 +1,5 @@
+#env
+chat/
+
+#api
+.env
