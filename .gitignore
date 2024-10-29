@@ -3,3 +3,6 @@ chat/
 
 #api
 .env
+
+#dataset
+travel_info.csv

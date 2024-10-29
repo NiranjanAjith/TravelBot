@@ -3,6 +3,7 @@ import pinecone
 import spacy
 import re
 import logging
+import requests
 from groq import Groq
 from dotenv import load_dotenv
 from typing import List, Dict, Any
@@ -14,6 +15,8 @@ load_dotenv()
 PINECONE_ENV = os.getenv("PINECONE_ENV", "us-west1-gcp")
 LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.1-70b-versatile")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+HF_API_TOKEN = os.getenv("HF_API_TOKEN")
+HF_MODEL_ID = os.getenv("HF_MODEL_ID")
 CHAT_HISTORY_LIMIT = int(os.getenv("CHAT_HISTORY_LIMIT", 100))
 SPACY_MODEL = os.getenv("SPACY_MODEL", "en_core_web_sm")
 PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
@@ -33,15 +36,28 @@ class RAGHandler:
             logging.error("Error initializing Pinecone client: %s", e)
             raise RuntimeError("Error initializing Pinecone client") from e
 
+    def generate_embedding(self, text: str) -> list:
+        """Generate embeddings for the input text using Hugging Face's Inference API."""
+        headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
+        response = requests.post(
+            f"https://api-inference.huggingface.co/pipeline/feature-extraction/{HF_MODEL_ID}",
+            headers=headers,
+            json={"inputs": text}
+        )
+        response.raise_for_status()
+        embedding = response.json()[0]
+        return embedding
+
     def retrieve_and_filter_documents(self, user_input: str, memory_data: Dict[str, Any]) -> List[str]:
         """Retrieve relevant documents and apply memory-based filters using Pinecone query."""
         combined_query = self._combine_query_with_memory(user_input, memory_data)
-        return self.retrieve_documents(combined_query)
-
-    def retrieve_documents(self, combined_query: str) -> List[str]:
-        """Query Pinecone to find relevant documents."""
+        
+        # Generate embedding vector for the combined query
+        embedding_vector = self.generate_embedding(combined_query)
+        
+        # Query Pinecone using the embedding vector
         try:
-            results = self.index.query(queries=[combined_query], top_k=5, include_metadata=True)
+            results = self.index.query(vector=embedding_vector, top_k=5, include_metadata=True)
             return [match['metadata']['text'] for match in results.get('matches', [])]
         except Exception as e:
             logging.error("Error querying Pinecone: %s", e)
@@ -146,10 +162,13 @@ class TravelMemory:
 
 class TravelChatbot:
     def __init__(self, pinecone_index_name: str):
-        """Initialize Travel Chatbot with memory and retrieval handler."""
+        """Initialize Travel Chatbot with memory, retrieval handler, and rate limit settings."""
         self.memory = TravelMemory()
         self.rag_handler = RAGHandler(pinecone_index_name=pinecone_index_name)
         self.groq_client = self._init_groq_client()
+        self.request_count = 0
+        self.MAX_REQUESTS = int(os.getenv("MAX_REQUESTS", 100))
+        self.MAX_INPUT_LENGTH = 256
 
     def _init_groq_client(self) -> Groq:
         """Initialize Groq client, raising error on failure."""
@@ -159,14 +178,24 @@ class TravelChatbot:
             logging.error("Error initializing Groq client: %s", e)
             raise RuntimeError("Error initializing Groq client") from e
 
+    def sanitize_input(self, input_text: str) -> str:
+        """Sanitize user input to prevent injection attacks and limit length."""
+        sanitized_input = re.sub(r"[^\w\s,.!?'-]", "", input_text)
+        return sanitized_input[:self.MAX_INPUT_LENGTH]
+
     def process_user_input(self, user_input: str) -> str:
         """Process user input, update memory, retrieve data, and generate a response."""
+        if self.request_count >= self.MAX_REQUESTS:
+            return "Rate limit reached. Please try again later."
+
+        sanitized_input = self.sanitize_input(user_input)
         try:
-            self.memory.update_memory(user_input)
+            self.memory.update_memory(sanitized_input)
             memory_data = self.memory.get_memory()
-            filtered_documents = self.rag_handler.retrieve_and_filter_documents(user_input, memory_data)
-            response = self._generate_response(user_input, filtered_documents)
-            self.memory.add_chat(user_input, response)
+            filtered_documents = self.rag_handler.retrieve_and_filter_documents(sanitized_input, memory_data)
+            response = self._generate_response(sanitized_input, filtered_documents)
+            self.memory.add_chat(sanitized_input, response)
+            self.request_count += 1
             return response
         except Exception as e:
             logging.error("Error processing user input: %s", e)
@@ -176,54 +205,23 @@ class TravelChatbot:
         """Generate a response using memory and the LLM based on filtered documents."""
         memory_data = self.memory.get_memory()
         memory_context = (
-            f"Destination: {memory_data.get('destination', 'unknown')}, "
-            f"Date: {memory_data.get('date', 'unspecified')}, "
-            f"Budget: {memory_data.get('budget', 'unspecified')}, "
-            f"Activity Preference: {memory_data.get('activity_preference', 'none')}, "
-            f"Head Count: {memory_data.get('head_count', '0')}"
+            f"Destination: {memory_data.get('destination', 'Unknown')}, "
+            f"Budget: {memory_data.get('budget', 'Unknown')}, "
+            f"Activity: {memory_data.get('activity_preference', 'Unknown')}, "
+            f"Date: {memory_data.get('date', 'Unknown')}, "
+            f"Transportation: {memory_data.get('transportation', 'Unknown')}, "
+            f"Accommodation: {memory_data.get('accommodation', 'Unknown')}"
         )
-        combined_input = f"User Query: {user_input}\nContext: {memory_context}\nRelevant Information: {filtered_documents}"
-        
-        try:
-            completion = self.groq_client.chat.completions.create(
-                model=LLM_MODEL,
-                messages=[{"role": "user", "content": combined_input}],
-                temperature=1,
-                max_tokens=1024,
-                top_p=1,
-                stream=False
-            )
-            return ''.join(chunk.choices[0].delta.content or "" for chunk in completion)
-        except Exception as e:
-            logging.error("Error generating response: %s", e)
-            return "I’m having trouble generating a response."
 
-    def clear_chat(self):
-        """Clears chat history and memory."""
+        context = (
+            f"User query: {user_input}\n"
+            f"Memory context: {memory_context}\n"
+            f"Relevant documents: {filtered_documents}"
+        )
+
+        return self.groq_client.chat(context)
+
+    def clear_memory(self):
+        """Clear memory and chat history."""
         self.memory.clear_memory()
-
-class TravelChatbotCoordinator:
-    def __init__(self):
-        """Initialize Travel Chatbot Coordinator with input validation and rate limiting."""
-        self.chatbot = TravelChatbot(pinecone_index_name=PINECONE_INDEX_NAME)
         self.request_count = 0
-        self.MAX_REQUESTS = int(os.getenv("MAX_REQUESTS", 100))
-
-    def sanitize_input(self, input_text: str) -> str:
-        """Sanitize user input to prevent injection attacks."""
-        return re.sub(r"[^\w\s,.!?'-]", "", input_text)
-
-    def start_chat(self):
-        """Begin chatbot interaction with security checks and rate limiting."""
-        print("Hello! I'm your travel assistant.")
-        while self.request_count < self.MAX_REQUESTS:
-            user_input = input("You: ")
-            user_input = self.sanitize_input(user_input)
-            if user_input.lower() in ["exit", "quit"]:
-                print("Goodbye!")
-                break
-            response = self.chatbot.process_user_input(user_input)
-            print("Bot:", response)
-            self.request_count += 1
-        else:
-            print("Rate limit reached. Please try again later.")
