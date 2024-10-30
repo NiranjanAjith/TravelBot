@@ -158,12 +158,19 @@ Ensure the following packages are installed:
 
 #### Running the Application
 
-1. **Start Streamlit Application**
+1. **Setup Pinecone DB**
+      The ragSetup.py script initializes your Pinecone database and sets up the necessary configurations.
+       This needs to be done only once to ensure the Pinecone index is created and ready for document retrieval.
+   ```bash
+   python ragSetup.py
+   ```
+      
+2. **Start Streamlit Application**
    ```bash
    streamlit run app.py
    ```
 
-2. **Using the Chatbot**
+3. **Using the Chatbot**
    - Open your browser and go to `http://localhost:8501`.
    - Type in travel-related queries like *"Find a budget-friendly destination for a solo trip in November"*.
    - The chatbot will process and display a relevant response based on your input and stored context.
