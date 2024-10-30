@@ -47,7 +47,7 @@ This chatbot uses a hybrid approach, combining traditional rule-based memory wit
 
 ---
 
-### 4. Architecture
+### 3. Architecture
 
 The architecture of this project can be described as a three-part Retrieval-Augmented Generation (RAG) solution:
 
@@ -76,7 +76,7 @@ The architecture of this project can be described as a three-part Retrieval-Augm
 
 ---
 
-### 5. Setup and Testing
+### 4. Setup and Testing
 
 #### Prerequisites
 
@@ -145,7 +145,7 @@ Ensure the following packages are installed:
 
 ---
 
-### 6. Example Queries
+### 5. Example Queries
 
 1. **Budget-focused Query**:
    ```
