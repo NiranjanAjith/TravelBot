@@ -7,6 +7,7 @@ from groq import Groq
 from dotenv import load_dotenv
 from typing import List, Dict, Any
 from pinecone import Pinecone
+from spacy.pipeline import EntityRuler
 
 logging.basicConfig(level=logging.INFO)
 
@@ -22,7 +23,109 @@ SPACY_MODEL = os.getenv("SPACY_MODEL", "en_core_web_sm")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.1-70b-versatile")
 
-nlp = spacy.load(SPACY_MODEL)
+
+def init_ner():
+    """Initialize the NER with custom travel planning patterns."""
+    # Load the small SpaCy model
+    nlp = spacy.load(SPACY_MODEL)
+
+    # Create an EntityRuler and give it a name
+    ruler = EntityRuler(nlp, overwrite_ents=True)
+
+    # Define patterns for various entities
+    destinations = [
+        {"label": "GPE", "pattern": [{"LOWER": "to"}, {"IS_TITLE": True}], "id": "destination"},
+        {"label": "GPE", "pattern": [{"LOWER": "in"}, {"IS_TITLE": True}]},
+        {"label": "GPE", "pattern": [{"LOWER": "visiting"}, {"IS_TITLE": True}]},
+        {"label": "GPE", "pattern": [{"LOWER": "travel"}, {"LOWER": "to"}, {"IS_TITLE": True}]},
+        {"label": "LOC", "pattern": [{"IS_TITLE": True, "OP": "+"}]},
+        {"label": "GPE", "pattern": [{"POS": "PROPN", "OP": "+"}]}
+    ]
+
+    dates = [
+        {"label": "DATE", "pattern": [{"SHAPE": "dd"}, {"LOWER": "of"}, {"LOWER": "month"}]},
+        {"label": "DATE", "pattern": [{"SHAPE": "dd/mm/yyyy"}]},
+        {"label": "DATE", "pattern": [{"LOWER": "next"}, {"LOWER": "week"}]},
+        {"label": "DATE", "pattern": [{"LOWER": "this"}, {"LOWER": "week"}]},
+        {"label": "DATE", "pattern": [{"LOWER": "tomorrow"}]},
+        {"label": "DATE", "pattern": [{"LOWER": "next"}, {"LOWER": "month"}]},
+        {"label": "DATE", "pattern": [{"IS_DIGIT": True}, {"LOWER": "days"}, {"LOWER": "from"}, {"LOWER": "now"}]},
+    ]
+
+    budgets = [
+        {"label": "MONEY", "pattern": [{"IS_CURRENCY": True}, {"IS_DIGIT": True}]},
+        {"label": "MONEY", "pattern": [{"LOWER": "budget"}, {"IS_CURRENCY": True}, {"IS_DIGIT": True}]},
+        {"label": "MONEY", "pattern": [{"LOWER": "around"}, {"IS_CURRENCY": True}, {"IS_DIGIT": True}]},
+    ]
+
+    activities = [
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "amusement"}, {"LOWER": "park"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "food"}, {"LOWER": "tasting"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "sightseeing"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "wildlife"}, {"LOWER": "safari"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "shopping"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "skiing"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "spa"}, {"LOWER": "day"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "photography"}, {"LOWER": "tour"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "historical"}, {"LOWER": "tour"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "nightlife"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "beach"}, {"LOWER": "day"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "culinary"}, {"LOWER": "class"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "city"}, {"LOWER": "tour"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "wine"}, {"LOWER": "tasting"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "music"}, {"LOWER": "festival"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "water"}, {"LOWER": "sports"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "hiking"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "cultural"}, {"LOWER": "experience"}]},
+        {"label": "ACTIVITY", "pattern": [{"LOWER": "museum"}, {"LOWER": "visit"}]},
+    ]
+
+    # Define activity types
+    activity_types = [
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "adventure"}]},
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "party"}]},
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "relaxation"}]},
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "cultural"}]},
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "culinary"}]},
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "outdoor"}]},
+        {"label": "ACTIVITY_TYPE", "pattern": [{"LOWER": "indoor"}]},
+    ]
+
+    transportations = [
+        {"label": "TRANSPORTATION", "pattern": [{"LOWER": "flight"}]},
+        {"label": "TRANSPORTATION", "pattern": [{"LOWER": "train"}]},
+        {"label": "TRANSPORTATION", "pattern": [{"LOWER": "bus"}]},
+        {"label": "TRANSPORTATION", "pattern": [{"LOWER": "car"}]},
+        {"label": "TRANSPORTATION", "pattern": [{"LOWER": "taxi"}]},
+        {"label": "TRANSPORTATION", "pattern": [{"LOWER": "bicycle"}]},
+    ]
+
+    accommodations = [
+        {"label": "ACCOMMODATION", "pattern": [{"LOWER": "hotel"}]},
+        {"label": "ACCOMMODATION", "pattern": [{"LOWER": "hostel"}]},
+        {"label": "ACCOMMODATION", "pattern": [{"LOWER": "bnb"}]},
+        {"label": "ACCOMMODATION", "pattern": [{"LOWER": "resort"}]},
+        {"label": "ACCOMMODATION", "pattern": [{"LOWER": "motel"}]},
+    ]
+
+    # Combine all patterns
+    all_patterns = (
+        destinations +
+        dates +
+        budgets +
+        activities +
+        activity_types +
+        transportations +
+        accommodations
+    )
+    
+    # ruler.add_patterns(all_patterns)
+
+    nlp.add_pipe("entity_ruler", config={"overwrite_ents": True})
+    nlp.get_pipe("entity_ruler").add_patterns(all_patterns)
+
+    return nlp
+
 
 class RAGHandler:
     def __init__(self, pinecone_index_name: str):
@@ -90,13 +193,11 @@ class RAGHandler:
 
     def retrieve_and_filter_documents(self, user_input: str, memory_data: Dict[str, Any]) -> List[str]:
         """Retrieve relevant documents and apply memory-based filters using Pinecone query."""
-        # combined_query = self._combine_query_with_memory(user_input, memory_data)
-        # Generate embedding vector for the combined query
         embedding_vector = self.generate_embedding(user_input) #replaced combined_query for parameter
         
         # Query Pinecone using the embedding vector
         try:
-            results = self.index.query(namespace="destinations", vector=embedding_vector, top_k=5, include_metadata=True)
+            results = self.index.query(namespace="destinations", vector=embedding_vector, top_k=2, include_metadata=True)
             return [match['metadata'] for match in results.get('matches', [])]
         except Exception as e:
             logging.error("Error querying Pinecone: %s", e)
@@ -114,6 +215,7 @@ class TravelMemory:
         self.memory = {}
         self.chat_history = []
         self.synonyms = self.load_synonyms()
+        self.nlp = init_ner()
 
     @staticmethod
     def load_synonyms() -> Dict[str, List[str]]:
@@ -129,19 +231,14 @@ class TravelMemory:
         }
 
     def update_memory(self, user_input: str):
-        """Update memory with user input using named entity recognition and heuristic checks."""
+        """Update memory with user input using named entity recognition."""
         try:
-            doc = nlp(user_input)
+            doc = self.nlp(user_input)
+            logging.info(f"\nNAMED ENTITES RECOGNISED:\n{doc}\n")
             for ent in doc.ents:
-                if ent.label_ == "GPE":
-                    self.memory['destination'] = ent.text
-                elif ent.label_ == "DATE":
-                    self.memory['date'] = ent.text
-                elif ent.label_ == "MONEY":
-                    budget_value = self._parse_budget(ent.text)
-                    if budget_value > 0:
-                        self.memory['budget'] = budget_value
-            self._extract_additional_preferences(user_input)
+                # Save all entities in the memory dictionary
+                self.memory[ent.label_] = ent.text
+            logging.info(f"\nMEMORY CONTEXT:\n{self.memory}\n")
         except Exception as e:
             logging.error("Error updating memory: %s", e)
 
@@ -152,18 +249,7 @@ class TravelMemory:
         except ValueError:
             logging.warning("Failed to parse budget from text: %s", text)
             return 0.0
-
-    def _extract_additional_preferences(self, user_input: str):
-        """Extract preferences such as activity, head count, etc., based on heuristics."""
-        if self.memory.get('activity_preference') is None:
-            self.memory['activity_preference'] = self._match_synonyms(user_input, 'activity_preference')
-        if self.memory.get('head_count') is None:
-            self.memory['head_count'] = self._match_head_count(user_input)
-        if self.memory.get('transportation') is None:
-            self.memory['transportation'] = self._match_synonyms(user_input, 'transportation')
-        if self.memory.get('accommodation') is None:
-            self.memory['accommodation'] = self._match_synonyms(user_input, 'accommodation')
-
+        
     def _match_synonyms(self, user_input: str, key: str) -> str:
         """Match user input with synonyms."""
         for synonym in self.synonyms.get(key, []):
