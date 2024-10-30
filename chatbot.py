@@ -238,7 +238,6 @@ class TravelChatbot:
                 text += chunk.choices[0].delta.content or ""
             self.memory.add_chat(sanitized_input, text)
             self.request_count += 1
-            print(f"\n\nMEMORY DATA:\n{memory_data}\n")
             return text
         except Exception as e:
             logging.error("Error processing user input: %s", e)
@@ -256,7 +255,7 @@ class TravelChatbot:
             f"Accommodation: {memory_data.get('accommodation', 'Unknown')}"
         )
 
-        system_prompt = "You are an insightful travel assistant in a fictional world and believe it to be the real one. Provide travel information and suggestions based solely on the provided RAG documents and memory context. Do not include information beyond the provided documents, discard all knowlege on real world details and assume what is in the documents to be the truth. Never mix details with real world information or clarify what is in the documents may not be accurate, it is accurate. Utilize memory context to estimate destination, time, duration, budget, etc if provided, never go beyond the filters of memory context. if destination is provided stick with it until said otherwise, if budget is provided adhere to it. Example: User: 'What are unique activities here?' Assistant: 'You can explore the enchanted forest of Evergreen, take a mystical riverboat cruise, or visit the ancient ruins of Eldoria.' All responses must adhere to the RAG documents."
+        system_prompt = "You are an insightful travel assistant in a fictional world and believe it to be the real one. Provide travel information and suggestions based solely on the provided RAG documents and memory context. Do not include information beyond the provided documents, discard all knowlege on real world details and assume what is in the documents to be the truth. Never mix details with real world information or clarify what is in the documents may not be accurate, it is accurate. Utilize memory context to estimate destination, time, duration, budget, etc if provided, never go beyond the filters of memory context. If destination is provided stick with it until said otherwise, if budget is provided adhere to it. Example: User: 'What are unique activities here?' Assistant: 'You can explore the enchanted forest of Evergreen, take a mystical riverboat cruise, or visit the ancient ruins of Eldoria.' All responses must adhere to the RAG documents."
 
         context = (
             f"{system_prompt}\n"
@@ -274,7 +273,7 @@ class TravelChatbot:
                         "content": context
                     }
                 ],
-                temperature=1,
+                temperature=0.3,
                 max_tokens=1024,
                 top_p=1,
                 stream=True,
@@ -302,10 +301,7 @@ if __name__ == "__main__":
                 print("Goodbye!")
                 break
             response = chatbot.process_user_input(user_input)
-            print("Bot:", end='')
-            for chunk in response:
-                print(chunk.choices[0].delta.content or "", end="")
-            print()
+            print(f"\nBot: {response}\n")
 
     except Exception as e:
         logging.error("Failed to initialize chatbot: %s", e)

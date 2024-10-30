@@ -1,0 +1,101 @@
+id,Destination Name,Country/City,Accommodation Options,Activities/Attractions,Travel Packages,Price,Availability,Ratings/Reviews
+1,Jakarta,"Jakarta, France",Business Hotel,Amusement Park,Business Hotel + Amusement Park Package,4235.99,Limited Availability,3.8
+2,Fiji,"Fiji, Japan",Guest House,Food Tasting,Guest House + Food Tasting Package,2643.76,Available,4.2
+3,Hiroshima,"Hiroshima, UK",Vacation Rental,Sightseeing,Vacation Rental + Sightseeing Package,4666.3,Fully Booked,4
+4,Warsaw,"Warsaw, Canada",Business Hotel,Wildlife Safari,Business Hotel + Wildlife Safari Package,3526.66,Available,4.9
+5,Vancouver,"Vancouver, Italy",Vacation Rental,Shopping,Vacation Rental + Shopping Package,1533.79,Available,4.3
+6,Melbourne,"Melbourne, Brazil",Business Hotel,Skiing,Business Hotel + Skiing Package,4612.48,Available,3.8
+7,Florence,"Florence, Brazil",Hostel,Spa Day,Hostel + Spa Day Package,2172.4,Limited Availability,4.8
+8,Brisbane,"Brisbane, Japan",Bed and Breakfast,Spa Day,Bed and Breakfast + Spa Day Package,3749.61,Available,4.2
+9,Mykonos,"Mykonos, Japan",Bed and Breakfast,Wildlife Safari,Bed and Breakfast + Wildlife Safari Package,425.85,Available,3.9
+10,Kathmandu,"Kathmandu, Italy",Boutique Hotel,Wildlife Safari,Boutique Hotel + Wildlife Safari Package,4192.8,Fully Booked,3.9
+11,Jakarta,"Jakarta, UK",Hostel,Skiing,Hostel + Skiing Package,3756.02,Fully Booked,3.7
+12,Madrid,"Madrid, France",Vacation Rental,Sightseeing,Vacation Rental + Sightseeing Package,1924.98,Fully Booked,4.6
+13,Mykonos,"Mykonos, Italy",Boutique Hotel,Photography Tour,Boutique Hotel + Photography Tour Package,4040.09,Fully Booked,4.7
+14,Kathmandu,"Kathmandu, UK",Vacation Rental,Amusement Park,Vacation Rental + Amusement Park Package,1670.34,Fully Booked,4.2
+15,Colombo,"Colombo, Spain",Boutique Hotel,Food Tasting,Boutique Hotel + Food Tasting Package,2546.82,Limited Availability,3.7
+16,Auckland,"Auckland, Brazil",Guest House,Shopping,Guest House + Shopping Package,240.32,Available,3.8
+17,Kyoto,"Kyoto, Australia",Hostel,Historical Tour,Hostel + Historical Tour Package,391.87,Limited Availability,4.7
+18,Zurich,"Zurich, France",Vacation Rental,Nightlife,Vacation Rental + Nightlife Package,4084.53,Fully Booked,4.5
+19,Salzburg,"Salzburg, France",Vacation Rental,Photography Tour,Vacation Rental + Photography Tour Package,3619.61,Fully Booked,3.7
+20,Beijing,"Beijing, Australia",Bed and Breakfast,Beach Day,Bed and Breakfast + Beach Day Package,1501.02,Fully Booked,3.6
+21,Hiroshima,"Hiroshima, Germany",Budget Hotel,Culinary Class,Budget Hotel + Culinary Class Package,3298.32,Fully Booked,3.6
+22,Canberra,"Canberra, Germany",Budget Hotel,Skiing,Budget Hotel + Skiing Package,1911.78,Fully Booked,4.5
+23,Barcelona,"Barcelona, UK",Resort,Sightseeing,Resort + Sightseeing Package,2566.61,Limited Availability,3.6
+24,Warsaw,"Warsaw, Australia",Luxury Hotel,Amusement Park,Luxury Hotel + Amusement Park Package,2831.51,Limited Availability,4.9
+25,Phuket,"Phuket, USA",Guest House,City Tour,Guest House + City Tour Package,2218.79,Fully Booked,4.1
+26,Athens,"Athens, Japan",Eco-lodge,City Tour,Eco-lodge + City Tour Package,3697.46,Fully Booked,4.9
+27,Bangkok,"Bangkok, Japan",Hostel,Beach Day,Hostel + Beach Day Package,4950.93,Fully Booked,3.9
+28,Queenstown,"Queenstown, Japan",Budget Hotel,Wine Tasting,Budget Hotel + Wine Tasting Package,1113.23,Limited Availability,3.8
+29,Seoul,"Seoul, UK",Boutique Hotel,Music Festival,Boutique Hotel + Music Festival Package,2221.62,Available,4.4
+30,Bali,"Bali, Japan",Eco-lodge,Water Sports,Eco-lodge + Water Sports Package,4286.46,Limited Availability,3.9
+31,Warsaw,"Warsaw, UK",Eco-lodge,Historical Tour,Eco-lodge + Historical Tour Package,2828.3,Fully Booked,3.9
+32,Berlin,"Berlin, Germany",Resort,Beach Day,Resort + Beach Day Package,2975.51,Available,3.9
+33,Mexico City,"Mexico City, UK",Hostel,Amusement Park,Hostel + Amusement Park Package,1755.6,Limited Availability,4
+34,Perth,"Perth, USA",Luxury Hotel,City Tour,Luxury Hotel + City Tour Package,2595.22,Limited Availability,4.3
+35,Auckland,"Auckland, France",Business Hotel,Music Festival,Business Hotel + Music Festival Package,3308.35,Limited Availability,3.7
+36,Nagoya,"Nagoya, Spain",Boutique Hotel,Photography Tour,Boutique Hotel + Photography Tour Package,4991.19,Limited Availability,3.9
+37,Los Angeles,"Los Angeles, France",Boutique Hotel,Wine Tasting,Boutique Hotel + Wine Tasting Package,2375.7,Fully Booked,4.7
+38,Hong Kong,"Hong Kong, Spain",Budget Hotel,Water Sports,Budget Hotel + Water Sports Package,3437.51,Available,5
+39,Monaco,"Monaco, USA",Eco-lodge,Sightseeing,Eco-lodge + Sightseeing Package,3526.15,Available,4.5
+40,Valencia,"Valencia, USA",Business Hotel,Sightseeing,Business Hotel + Sightseeing Package,324.69,Available,4.1
+41,Sendai,"Sendai, Australia",Boutique Hotel,Beach Day,Boutique Hotel + Beach Day Package,4369.03,Limited Availability,4.3
+42,Gold Coast,"Gold Coast, Canada",Budget Hotel,Wine Tasting,Budget Hotel + Wine Tasting Package,525.63,Fully Booked,3.8
+43,Berlin,"Berlin, USA",Budget Hotel,Photography Tour,Budget Hotel + Photography Tour Package,1378.44,Limited Availability,4.4
+44,Colombo,"Colombo, USA",Hostel,Skiing,Hostel + Skiing Package,202.81,Limited Availability,4.2
+45,Sapporo,"Sapporo, Spain",Vacation Rental,Music Festival,Vacation Rental + Music Festival Package,3232.69,Limited Availability,4.5
+46,Nice,"Nice, Japan",Luxury Hotel,Amusement Park,Luxury Hotel + Amusement Park Package,4810.52,Available,3.6
+47,Nice,"Nice, Japan",Business Hotel,Historical Tour,Business Hotel + Historical Tour Package,4474.74,Available,4.7
+48,Mexico City,"Mexico City, Italy",Boutique Hotel,Skiing,Boutique Hotel + Skiing Package,3196.99,Fully Booked,4.1
+49,Moscow,"Moscow, Italy",Budget Hotel,Hiking,Budget Hotel + Hiking Package,3468.82,Available,3.9
+50,Moscow,"Moscow, Japan",Hostel,Shopping,Hostel + Shopping Package,3590.81,Fully Booked,3.9
+51,Vienna,"Vienna, Spain",Vacation Rental,Shopping,Vacation Rental + Shopping Package,3346.19,Fully Booked,4.7
+52,Copenhagen,"Copenhagen, Brazil",Bed and Breakfast,Music Festival,Bed and Breakfast + Music Festival Package,2281.18,Fully Booked,4.6
+53,Cannes,"Cannes, Japan",Bed and Breakfast,Skiing,Bed and Breakfast + Skiing Package,3905.86,Available,4
+54,Toronto,"Toronto, Spain",Boutique Hotel,Cultural Experience,Boutique Hotel + Cultural Experience Package,4482.72,Fully Booked,4.4
+55,Reykjavik,"Reykjavik, Germany",Budget Hotel,Skiing,Budget Hotel + Skiing Package,535.43,Available,4.2
+56,Florence,"Florence, Brazil",Boutique Hotel,Wine Tasting,Boutique Hotel + Wine Tasting Package,1582.68,Fully Booked,4.2
+57,Vienna,"Vienna, Japan",Business Hotel,Spa Day,Business Hotel + Spa Day Package,1724.7,Fully Booked,4.2
+58,Palermo,"Palermo, Canada",Budget Hotel,Music Festival,Budget Hotel + Music Festival Package,1254.94,Available,4.1
+59,Canberra,"Canberra, USA",Resort,Cultural Experience,Resort + Cultural Experience Package,2146.15,Limited Availability,3.9
+60,Los Angeles,"Los Angeles, Canada",Budget Hotel,Sightseeing,Budget Hotel + Sightseeing Package,1015.35,Available,4.6
+61,Fiji,"Fiji, USA",Eco-lodge,Culinary Class,Eco-lodge + Culinary Class Package,2389.89,Limited Availability,4.1
+62,Jakarta,"Jakarta, UK",Luxury Hotel,Photography Tour,Luxury Hotel + Photography Tour Package,3359.93,Limited Availability,4.6
+63,Athens,"Athens, Brazil",Vacation Rental,Water Sports,Vacation Rental + Water Sports Package,4997.98,Fully Booked,4.6
+64,Palermo,"Palermo, Spain",Business Hotel,Skiing,Business Hotel + Skiing Package,4506.05,Limited Availability,3.6
+65,Berlin,"Berlin, Brazil",Eco-lodge,City Tour,Eco-lodge + City Tour Package,3655.5,Fully Booked,4
+66,Cape Town,"Cape Town, Italy",Budget Hotel,Water Sports,Budget Hotel + Water Sports Package,896.88,Available,4.8
+67,Cape Town,"Cape Town, Spain",Bed and Breakfast,Music Festival,Bed and Breakfast + Music Festival Package,988.54,Available,3.7
+68,Porto,"Porto, Australia",Eco-lodge,Museum Visit,Eco-lodge + Museum Visit Package,1246.81,Limited Availability,4.6
+69,Venice,"Venice, Canada",Guest House,Water Sports,Guest House + Water Sports Package,244.29,Available,4.2
+70,Venice,"Venice, Germany",Hostel,Sightseeing,Hostel + Sightseeing Package,3903.79,Limited Availability,4.3
+71,Amsterdam,"Amsterdam, Japan",Eco-lodge,Hiking,Eco-lodge + Hiking Package,1708.27,Available,4.8
+72,Seoul,"Seoul, Italy",Budget Hotel,Beach Day,Budget Hotel + Beach Day Package,4031.61,Available,4.5
+73,Valencia,"Valencia, Japan",Eco-lodge,City Tour,Eco-lodge + City Tour Package,2380.91,Fully Booked,3.6
+74,Vancouver,"Vancouver, Australia",Budget Hotel,Nightlife,Budget Hotel + Nightlife Package,4215.36,Fully Booked,4.7
+75,Sydney,"Sydney, France",Resort,Cultural Experience,Resort + Cultural Experience Package,3101.55,Available,4
+76,Mexico City,"Mexico City, Germany",Boutique Hotel,Water Sports,Boutique Hotel + Water Sports Package,2443.61,Fully Booked,4.1
+77,Fiji,"Fiji, Brazil",Budget Hotel,Cultural Experience,Budget Hotel + Cultural Experience Package,1508.6,Available,4.7
+78,Madrid,"Madrid, USA",Budget Hotel,Nightlife,Budget Hotel + Nightlife Package,399.58,Limited Availability,4.7
+79,Porto,"Porto, Germany",Bed and Breakfast,Shopping,Bed and Breakfast + Shopping Package,521.37,Available,3.6
+80,Stockholm,"Stockholm, Spain",Vacation Rental,Museum Visit,Vacation Rental + Museum Visit Package,2461.58,Available,4.8
+81,Taipei,"Taipei, Japan",Business Hotel,Shopping,Business Hotel + Shopping Package,965.49,Available,4.3
+82,Salzburg,"Salzburg, Australia",Business Hotel,Spa Day,Business Hotel + Spa Day Package,4300.04,Fully Booked,4.7
+83,Jakarta,"Jakarta, Germany",Business Hotel,Cultural Experience,Business Hotel + Cultural Experience Package,4390.87,Available,3.9
+84,Kuala Lumpur,"Kuala Lumpur, USA",Resort,Historical Tour,Resort + Historical Tour Package,1440.27,Limited Availability,3.6
+85,Manila,"Manila, Spain",Resort,Music Festival,Resort + Music Festival Package,4618.8,Limited Availability,4.6
+86,Tokyo,"Tokyo, Japan",Budget Hotel,Water Sports,Budget Hotel + Water Sports Package,3567.7,Available,3.7
+87,Madrid,"Madrid, Japan",Boutique Hotel,Hiking,Boutique Hotel + Hiking Package,260.46,Available,4.9
+88,Nagoya,"Nagoya, UK",Budget Hotel,Sightseeing,Budget Hotel + Sightseeing Package,3244.98,Available,4.9
+89,Oslo,"Oslo, Canada",Business Hotel,Hiking,Business Hotel + Hiking Package,3772.5,Fully Booked,4
+90,Chennai,"Chennai, Spain",Bed and Breakfast,Skiing,Bed and Breakfast + Skiing Package,489.89,Limited Availability,4.1
+91,Sydney,"Sydney, Italy",Budget Hotel,Historical Tour,Budget Hotel + Historical Tour Package,1254.99,Fully Booked,4.3
+92,Reykjavik,"Reykjavik, USA",Eco-lodge,Nightlife,Eco-lodge + Nightlife Package,3659.46,Available,4.1
+93,Brussels,"Brussels, USA",Luxury Hotel,Beach Day,Luxury Hotel + Beach Day Package,750.64,Limited Availability,4.8
+94,Sydney,"Sydney, UK",Boutique Hotel,Beach Day,Boutique Hotel + Beach Day Package,323.37,Available,4
+95,Mykonos,"Mykonos, Japan",Business Hotel,Skiing,Business Hotel + Skiing Package,2816.02,Available,4.2
+96,Vienna,"Vienna, Germany",Boutique Hotel,Music Festival,Boutique Hotel + Music Festival Package,4717.76,Available,4.2
+97,Kyoto,"Kyoto, Italy",Vacation Rental,Shopping,Vacation Rental + Shopping Package,3322.58,Fully Booked,4.6
+98,Brussels,"Brussels, Japan",Eco-lodge,Wine Tasting,Eco-lodge + Wine Tasting Package,1066.03,Available,3.7
+99,Vancouver,"Vancouver, France",Resort,Wine Tasting,Resort + Wine Tasting Package,1534.38,Limited Availability,4.9
+100,Seville,"Seville, Spain",Budget Hotel,Spa Day,Budget Hotel + Spa Day Package,1580.65,Fully Booked,4.2

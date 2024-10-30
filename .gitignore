@@ -4,8 +4,5 @@ chat/
 #api
 .env
 
-#dataset
-travel_info.csv
-
 #pychache
 __pycache__/
