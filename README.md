@@ -90,7 +90,7 @@ Ensure the following packages are installed:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/travel-chatbot.git
+   [git clone https://github.com/your-username/travel-chatbot.git](https://github.com/NiranjanAjith/TravelBot.git)
    cd travel-chatbot
    ```
 
