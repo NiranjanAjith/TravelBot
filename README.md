@@ -13,10 +13,9 @@ Hugging Face for embeddings, and a Groq-powered language model.
 
 1. [Project Overview](#project-overview)
 2. [Approach and Solution Design](#approach-and-solution-design)
-3. [Vector Database Selection](#vector-database-selection)
-4. [Architecture](#architecture)
-5. [Setup and Testing](#setup-and-testing)
-6. [Example Queries](#example-queries)
+3. [Architecture](#architecture)
+4. [Setup and Testing](#setup-and-testing)
+5. [Example Queries](#example-queries)
 
 ---
 
