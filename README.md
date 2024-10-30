@@ -91,7 +91,7 @@ Ensure the following packages are installed:
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/NiranjanAjith/TravelBot.git
-   cd travel-chatbot
+   cd TravelBot
    ```
 
 2. **Set up Virtual Environment**
