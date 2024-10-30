@@ -74,42 +74,6 @@ The architecture of this project can be described as a three-part Retrieval-Augm
     - llama-3.1-70b-versatile: This model is chosen for its versatility, fine-tuned to handle various topics, including travel queries.
       The 70 billion parameters allow for nuanced, detailed responses while balancing response quality with manageable computational demands.
 
-```
-            ┌───────────────┐
-            │   User Input  │
-            └──────┬────────┘
-                   │
-                   ▼
-          ┌────────────────────┐
-          │      Memory        │
-          │  Context Manager   │
-          └────────────────────┘
-                   │
-                   ▼
-          ┌────────────────────┐
-          │ Embedding Model    │
-          │ (Hugging Face)     │
-          └────────────────────┘
-                   │
-                   ▼
-          ┌────────────────────┐
-          │   Vector Store     │
-          │    (Pinecone)      │
-          └────────────────────┘
-                   │
-                   ▼
-          ┌────────────────────┐
-          │  Generative Model  │
-          │     (Groq LLM)     │
-          └────────────────────┘
-                   │
-                   ▼
-          ┌────────────────────┐
-          │       Output       │
-          │    (Streamlit)     │
-          └────────────────────┘
-```
-
 ---
 
 ### 5. Setup and Testing
