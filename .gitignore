@@ -6,3 +6,7 @@ chat/
 
 #pychache
 __pycache__/
+
+#docs
+*.docx
+*.pdf
